@@ -1,7 +1,14 @@
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { getVisibleContacts } from '../../redux/contacts/contacts-selector';
+import contactsActions from '../../redux/contacts/contacts-actions';
 import s from './ContactList.module.css';
 
-function ContactList({ contacts, onDeleteContact }) {
+function ContactList() {
+  const contacts = useSelector(getVisibleContacts);
+  const dispatch = useDispatch();
+
+  const onDeleteContact = id => dispatch(contactsActions.deleteContact(id));
+
   return (
     <div>
       <ul className={s.list}>
@@ -15,10 +22,5 @@ function ContactList({ contacts, onDeleteContact }) {
     </div>
   );
 }
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(PropTypes.object),
-  onDeleteContact: PropTypes.func,
-};
 
 export default ContactList;
